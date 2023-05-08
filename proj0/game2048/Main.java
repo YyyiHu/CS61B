@@ -1,7 +1,6 @@
 package game2048;
 
 import java.util.Random;
-
 import ucb.util.CommandArgs;
 
 /** The main class for the 2048 game.
