@@ -143,29 +143,88 @@ public class Model extends Observable {
         // changed local variable to true.
 
         checkGameOver();
-
         board.setViewingPerspective(side);
-        // first write an example of col 0
-        for (int row = 3; row > 0; row--) {
-            Tile t = board.tile(0, row);
-        }
+            for (int row = 3; row > 0; row--) {
+                for (int down_row = row - 1; down_row >= 0; down_row--) {
+                    Tile t = board.tile(0, row);
+                    Tile t2 = board.tile(0, down_row);
+                    if (t == null && t2 != null) {
+                        board.move(0, row, t2);
+                        changed = true;
+                    }
+                    if (t != null && t2 != null && t.value() != t2.value()) {
+                        break;
+                    } else if (t != null && t2 != null && t.value() == t2.value()) {
+                        board.move(0, row, t2);
+                        score += board.tile(0, row).value();
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+            for (int row = 3; row > 0; row--) {
+                for (int down_row = row - 1; down_row >= 0; down_row--) {
+                    Tile t = board.tile(1, row);
+                    Tile t2 = board.tile(1, down_row);
+                    if (t == null && t2 != null) {
+                        board.move(1, row, t2);
+                        changed = true;
+                    }
+                    if (t != null && t2 != null && t.value() != t2.value()) {
+                        break;
+                    } else if (t != null && t2 != null && t.value() == t2.value()) {
+                        board.move(1, row, t2);
+                        score += board.tile(1, row).value();
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+            for (int row = 3; row > 0; row--) {
+                for (int down_row = row - 1; down_row >= 0; down_row--) {
+                    Tile t = board.tile(2, row);
+                    Tile t2 = board.tile(2, down_row);
+                    if (t == null && t2 != null) {
+                        board.move(2, row, t2);
+                        changed = true;
+                    }
+                    if (t != null && t2 != null && t.value() != t2.value()) {
+                        break;
+                    } else if (t != null && t2 != null && t.value() == t2.value()) {
+                        board.move(2, row, t2);
+                        score += board.tile(2, row).value();
+                        changed = true;
+                        break;
+                    }
+                }
+            }
+            for (int row = 3; row > 0; row--) {
+                for (int down_row = row - 1; down_row >= 0; down_row--) {
+                    Tile t = board.tile(3, row);
+                    Tile t2 = board.tile(3, down_row);
+                    if (t == null && t2 != null) {
+                        board.move(3, row, t2);
+                        changed = true;
+                    }
+                    if (t != null && t2 != null && t.value() != t2.value()) {
+                        break;
+                    } else if (t != null && t2 != null && t.value() == t2.value()) {
+                        board.move(3, row, t2);
+                        score += board.tile(3, row).value();
+                        changed = true;
+                        break;
+                    }
+                }
+            }
 
-
-
-
-
-
-
-
-
-
-
-
-        if (changed) {
-            setChanged();
-        }
+            if (changed) {
+                board.setViewingPerspective(Side.NORTH);
+                setChanged();
+            }
         return changed;
     }
+
+
 
     /**
      * Checks if the game is over and sets the gameOver variable
