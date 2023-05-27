@@ -1,16 +1,26 @@
 package deque;
 
+/**
+ * This is a class representing a double-ended linkedlist.
+ * @param <T>
+ */
 public class LinkedListDeque<T> {
+
+    /**
+     * This is a class representing a Node, which contains a previous Node, an item and a next Node.
+     * @param <T> The type of the item stored in the Node.
+     */
     private static class Node<T> {
         Node next;
         T item;
         Node prev;
 
+
         /**
-         * This class represents a Node.
-         * @param item the item stored in the Node
-         * @param next the next Node
-         * @param prev the prev Node
+         * Creates a new Node.
+         * @param prev The previous Node in the sequence.
+         * @param item The item stored in the Node.
+         * @param next The next Node in the sequence.
          */
         private Node(Node prev, T item, Node next) {
             this.prev = prev;
@@ -111,7 +121,10 @@ public class LinkedListDeque<T> {
         }
     }
 
-    // Constructor for an empty linked list deque
+
+    /**
+     *  Creates a new empty double-ended linkedlist.
+     */
     public LinkedListDeque() {
         sentinel = new Node<>(null, 18, null);
         sentinel.next = sentinel;
