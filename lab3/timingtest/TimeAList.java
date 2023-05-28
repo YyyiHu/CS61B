@@ -27,13 +27,15 @@ public class TimeAList {
     public static void timeAListConstruction() {
         // TODO: YOUR CODE HERE
 
-
-        // Create addLast time table
+        // Create an AList to store the addLast time data
         AList<Double> times = new AList<>();
-        // Create Timing table
+        // Create the Timing table
         AList<Integer> Ns = new AList<>();
-        for(int number = 1000; number <= 128000; number = 2 * number) {
-            Ns.addLast(number);
+        int start = 1000;
+        int end = 128000;
+        while (start <= end) {
+            Ns.addLast(start);
+            start *= 2;
         }
         // Create ops table
         AList<Integer> opCounts = Ns;
@@ -45,7 +47,9 @@ public class TimeAList {
             // Using addLast method to create a AList, use a timer to calculate the total time
             // for lst to reach a certain size
             Stopwatch sw = new Stopwatch();
-            for(lst.size(); lst.size() < Ns.get(i); lst.addLast(1));
+            while (lst.size() < Ns.get(i)) {
+                lst.addLast(1);
+            }
             double time = sw.elapsedTime();
             times.addLast(time);
         }
