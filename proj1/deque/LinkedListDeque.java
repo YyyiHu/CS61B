@@ -1,10 +1,12 @@
 package deque;
 
+import java.util.Iterator;
+
 /**
  * This is a class representing a double-ended linkedlist.
- * @param <T>
+ * @param <T> The type of LinkedListDeque.
  */
-public class LinkedListDeque<T> {
+public class LinkedListDeque<T> implements Iterable<T> {
 
     /**
      * This is a class representing a Node, which contains a previous Node, an item and a next Node.
@@ -123,7 +125,7 @@ public class LinkedListDeque<T> {
 
 
     /**
-     *  Creates a new empty double-ended linkedlist.
+     * Creates a new empty double-ended linkedlist.
      */
     public LinkedListDeque() {
         sentinel = new Node<>(null, 18, null);
@@ -131,6 +133,48 @@ public class LinkedListDeque<T> {
         size = 0;
     }
 
+    /**
+     * Creates and returns an iterator.
+     * @return A new iterator.
+     */
+
+    @Override
+    public Iterator<T> iterator() {
+        return new DequeIterator<T>();
+    }
+
+    public boolean equals(Object o) {
+        if (o instanceof LinkedListDeque) {
+            LinkedListDeque<T> anotherDeque = (LinkedListDeque<T>) o;
+            if (anotherDeque.size == this.size) {
+                for (int i = 0; i < anotherDeque.size(); i++) {
+                    anotherDeque.get(i).equals(this.get(i));
+                }
+            }
+        }
+        return false;
+    }
+    private class DequeIterator<T> implements Iterator<T> {
+        int pos;
+
+        @Override
+        public boolean hasNext() {
+            if (pos < size) {
+                return true;
+            } else return false;
+        }
+
+        @Override
+        public T next() {
+            T returnItem = (T) get(pos);
+            pos++;
+            return returnItem;
+        }
+
+        public DequeIterator() {
+            pos = 0;
+        }
+    }
 
 
     public static void main(String[] args) {
