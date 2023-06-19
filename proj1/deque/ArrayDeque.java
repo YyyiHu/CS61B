@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 /**
  * This class represents a circular array.
+ * @param <Item> The type of ArrayDeque.
  */
 public class ArrayDeque<Item> implements Iterable<Item> {
     private int size;
@@ -77,7 +78,8 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         size++;
     }
 
-    public void removeFirst() {
+    public Item removeFirst() {
+        Item returnRemoveFirst = items[currentFirst];
         items[currentFirst] = null;
         nextFirst = currentFirst;
         currentFirst = (currentFirst + 1) % items.length;
@@ -85,9 +87,11 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         if (items.length > 8 && usage < 0.25) {
             resize(items.length / 2);
         }
+        return returnRemoveFirst;
     }
 
-    public void removeLast() {
+    public Item removeLast() {
+        Item returnRemoveLast = items[currentLast];
         items[currentLast] = null;
         nextLast = currentLast;
         currentLast = (currentLast - 1 + items.length) % items.length;
@@ -95,6 +99,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         if (items.length > 8 && usage < 0.25) {
             resize(items.length / 2);
         }
+        return returnRemoveLast;
     }
 
     public int size() {
@@ -168,19 +173,6 @@ public class ArrayDeque<Item> implements Iterable<Item> {
     public Iterator<Item> iterator() {
         return new ArrayIterator();
     }
-
-    public static void main(String[] args) {
-        ArrayDeque<Integer> deque = new ArrayDeque<>();
-        ArrayDeque<Integer> deque2 = new ArrayDeque<>();
-        for (int i = 0; i < 8; i++) {
-            deque.addFirst(i);
-        }
-        for (int i = 0; i < 8; i++) {
-            deque2.addFirst(i);
-        }
-        System.out.println(deque.equals(deque2));
-        deque.printDeque();
-        System.out.println(deque.size);
-    }
+    
 
 }

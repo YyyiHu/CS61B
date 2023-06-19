@@ -3,6 +3,9 @@ package tester;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import edu.princeton.cs.introcs.StdRandom;
+
+import java.util.ArrayDeque;
+
 /** Demos the version of assertEquals with a String message. */
 public class AssertEqualsStringDemo {
     @Test
