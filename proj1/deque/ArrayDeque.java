@@ -49,13 +49,12 @@ public class ArrayDeque<Item> implements Iterable<Item> {
     public ArrayDeque() {
         items = (Item[]) new Object[8];
         size = 0;
-        nextFirst = 5;
-        nextLast = 6;
-        currentFirst = 5;
-        currentLast = 6;
+        nextFirst = 7;
+        nextLast = 0;
+        currentFirst = 7;
+        currentLast = 0;
         usage = size / items.length;
     }
-
 
 
     public void addFirst(Item item) {
@@ -108,6 +107,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
 
     /**
      * Detect if an ArrayDeque is empty.
+     *
      * @return True if there is no item stored in the ArrayDeque.
      */
     public boolean isEmpty() {
@@ -120,7 +120,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
 
     private void resize(int capacity) {
         Item[] resizeItems = (Item[]) new Object[capacity];
-        Iterator<Item> seer = this.iterator();
+        Iterator<Item> seer = iterator();
         int i = 0;
         while (seer.hasNext()) {
             resizeItems[i] = seer.next();
@@ -141,13 +141,13 @@ public class ArrayDeque<Item> implements Iterable<Item> {
             if (anotherArray.items.length == this.items.length) {
                 int comapreNoNull = currentFirst;
                 if (items[currentFirst] == null && anotherArray.items[currentFirst] == null) {
-                    comapreNoNull = (comapreNoNull + 1 ) % items.length;
+                    comapreNoNull = (comapreNoNull + 1) % items.length;
                 }
                 for (int i = 0; i < size; i++) {
                     if (!items[comapreNoNull].equals(anotherArray.items[comapreNoNull])) {
                         return false;
                     }
-                    comapreNoNull = (comapreNoNull + 1 ) % items.length;
+                    comapreNoNull = (comapreNoNull + 1) % items.length;
                 }
                 return true;
             }
@@ -160,19 +160,32 @@ public class ArrayDeque<Item> implements Iterable<Item> {
      */
     public void printDeque() {
         int printPosition = currentFirst;
-         while (items[printPosition] == null) {
-             printPosition = (printPosition + 1) % items.length;
-         }
-         for (int printTimes = 0; printTimes < size - 1; printTimes++) {
-             System.out.print(items[printPosition] + " ");
-             printPosition = (printPosition + 1) % items.length;
-         }
+        while (items[printPosition] == null) {
+            printPosition = (printPosition + 1) % items.length;
+        }
+        for (int printTimes = 0; printTimes < size - 1; printTimes++) {
+            System.out.print(items[printPosition] + " ");
+            printPosition = (printPosition + 1) % items.length;
+        }
         System.out.println(items[printPosition]);
     }
 
     public Iterator<Item> iterator() {
         return new ArrayIterator();
     }
-    
 
+    public static void main(String[] args) {
+        ArrayDeque<Integer> test = new ArrayDeque<>();
+        test.addLast(1);
+        test.addLast(2);
+        test.printDeque();
+        ArrayDeque<Integer> test1 = new ArrayDeque<>();
+        test1.addLast(1);
+        test1.addLast(2);
+        System.out.println(test.equals(test1));
+        for (int i = 0; i < 11; i++) {
+            test.addFirst(i);
+        }
+        test.printDeque();
+    }
 }
