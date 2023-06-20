@@ -81,6 +81,12 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
 
     @Override
     public Item removeFirst() {
+        if (items == null) {
+            return null;
+        }
+        if (items[currentFirst] == null) {
+            return null;
+        }
         Item returnRemoveFirst = items[currentFirst];
         items[currentFirst] = null;
         nextFirst = currentFirst;
@@ -94,6 +100,12 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
 
     @Override
     public Item removeLast() {
+        if (items == null) {
+            return null;
+        }
+        if (items[currentLast] == null) {
+            return null;
+        }
         Item returnRemoveLast = items[currentLast];
         items[currentLast] = null;
         nextLast = currentLast;
