@@ -7,7 +7,7 @@ import java.util.Iterator;
  * This class represents a circular array.
  * @param <Item> The type of ArrayDeque.
  */
-public class ArrayDeque<Item> implements Iterable<Item> {
+public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     private int size;
     private int nextFirst;
     private int nextLast;
@@ -30,7 +30,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         public boolean hasNext() {
             return seerTimes < size;
         }
-
+        @Override
         public Item next() {
             Item returnNext = null;
             while (items[seerPosition] == null) {
@@ -56,7 +56,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         usage = size / items.length;
     }
 
-
+    @Override
     public void addFirst(Item item) {
         if (size == items.length) {
             resize(size * 2);
@@ -67,6 +67,8 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         size++;
     }
 
+
+    @Override
     public void addLast(Item item) {
         if (size == items.length) {
             resize(size * 2);
@@ -77,6 +79,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         size++;
     }
 
+    @Override
     public Item removeFirst() {
         Item returnRemoveFirst = items[currentFirst];
         items[currentFirst] = null;
@@ -89,6 +92,7 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         return returnRemoveFirst;
     }
 
+    @Override
     public Item removeLast() {
         Item returnRemoveLast = items[currentLast];
         items[currentLast] = null;
@@ -101,19 +105,13 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         return returnRemoveLast;
     }
 
+    @Override
     public int size() {
         return size;
     }
 
-    /**
-     * Detect if an ArrayDeque is empty.
-     *
-     * @return True if there is no item stored in the ArrayDeque.
-     */
-    public boolean isEmpty() {
-        return size == 0;
-    }
 
+    @Override
     public Item get(int index) {
         return items[index];
     }
@@ -131,7 +129,6 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         nextLast = size;
     }
 
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -155,9 +152,11 @@ public class ArrayDeque<Item> implements Iterable<Item> {
         return false;
     }
 
+
     /**
      * Prints the items in the deque from first to last, separated by a space.
      */
+    @Override
     public void printDeque() {
         int printPosition = currentFirst;
         while (items[printPosition] == null) {

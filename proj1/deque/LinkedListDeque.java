@@ -6,7 +6,7 @@ import java.util.Iterator;
  * This is a class representing a double-ended linkedlist.
  * @param <T> The type of LinkedListDeque.
  */
-public class LinkedListDeque<T> implements Iterable<T> {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
 
     /**
      * This is a class representing a Node, which contains a previous Node, an item and a next Node.
@@ -34,6 +34,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
     private int size;
     private Node sentinel;
 
+    @Override
     public void addFirst(T item) {
         Node newNode = new Node(null, item, null);
         newNode.prev = sentinel;
@@ -43,6 +44,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         size++;
     }
 
+    @Override
     public void addLast(T item) {
         Node newNode = new Node<>(null, item, null);
         sentinel.prev.next = newNode;
@@ -52,15 +54,13 @@ public class LinkedListDeque<T> implements Iterable<T> {
         size++;
     }
 
-    // Return true id deque is empty, false otherwise
-    public boolean isEmpty() {
-        return size == 0;
-    }
 
+    @Override
     public int size() {
         return size;
     }
 
+    @Override
     /**
      * Prints the items in the deque from first to last, separated by a space.
      */
@@ -73,6 +73,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         System.out.println(printNode.item);
     }
 
+    @Override
     // Removes and returns the item at the front of the deque
     // If no such item exists, returns null
     public T removeFirst() {
@@ -86,6 +87,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return first;
     }
 
+    @Override
     public T removeLast() {
         if (sentinel.next == sentinel) {
             return null;
@@ -97,6 +99,7 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return last;
     }
 
+    @Override
     // Gets the item at the given index, where 0 is the front
     // If no such item exists, returns null
     public T get(int index) {

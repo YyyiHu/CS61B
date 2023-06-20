@@ -1,6 +1,5 @@
 package deque;
 
-
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -34,8 +33,6 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         public MaxArrayDeque(Comparator<T> c) {
             arrayComparator = c;
         }
-
-
 
         /**
          * Find the maximum element in the ArrayDeque.
