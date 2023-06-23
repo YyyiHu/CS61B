@@ -14,13 +14,27 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
          */
         @Override
         public int compare(T a, T b) {
+            int returnValue = 0;
             if (a == null && b == null) {
-                return 0;
+                returnValue = 0;
             } else if (a == null) {
-                return -1;
+                returnValue = -1;
             } else if (b == null) {
-                return 1;
-            } else return (int) a - (int) b;
+                returnValue = 1;
+            }
+            if (a instanceof Integer && b instanceof Integer) {
+                returnValue = (int) a - (int) b;
+            }
+            if (a instanceof Double && b instanceof Double) {
+                if (((double) a - (double) b) > 0) {
+                    returnValue = 1;
+                } else if (((double) a - (double) b) == 0) {
+                    returnValue = 0;
+                } else if (((double) a - (double) b) < 0) {
+                    returnValue = -1;
+                }
+            }
+            return returnValue;
         }
 
     }
@@ -85,5 +99,14 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             test.addFirst(x);
         }
         System.out.println(test.max());
-    }
+
+        Comparator<Double> com1 = new ArrayComparator<>();
+        MaxArrayDeque<Double> test1 = new MaxArrayDeque<>(com1);
+        for (double x = 110.9; x < 145.23; x++) {
+            test1.addFirst(x);
+        }
+        System.out.println(test1.max(com1));
+
+        }
+
 }

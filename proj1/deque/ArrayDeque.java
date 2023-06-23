@@ -11,11 +11,10 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     private int size;
     private int nextFirst;
     private int nextLast;
-    private int currentFirst;
-    private int currentLast;
-
     private Item[] items;
     private double usage;
+    public int currentFirst;
+    public int currentLast;
 
     private class ArrayIterator implements Iterator<Item> {
         int seerPosition;
@@ -32,11 +31,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         }
         @Override
         public Item next() {
-            Item returnNext = null;
-            while (items[seerPosition] == null) {
-                seerPosition = (seerPosition + 1) % items.length;
-            }
-            returnNext = items[seerPosition];
+            Item returnNext = items[seerPosition];
             seerPosition = (seerPosition + 1) % items.length;
             seerTimes++;
             return returnNext;
@@ -49,17 +44,19 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
     public ArrayDeque() {
         items = (Item[]) new Object[8];
         size = 0;
-        nextFirst = 7;
         nextLast = 0;
-        currentFirst = 7;
+        nextFirst = 0;
+        currentFirst = 0;
         currentLast = 0;
-        usage = size / items.length;
     }
 
     @Override
     public void addFirst(Item item) {
         if (size == items.length) {
             resize(size * 2);
+        }
+        if (nextFirst == 0 && items[0] != null) {
+            nextFirst = 7;
         }
         items[nextFirst] = item;
         currentFirst = nextFirst;
@@ -73,6 +70,9 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         if (size == items.length) {
             resize(size * 2);
         }
+        if (nextLast == 0 && items[0] != null) {
+            nextLast = 7;
+        }
         items[nextLast] = item;
         currentLast = nextLast;
         nextLast = (nextLast + 1) % items.length;
@@ -81,10 +81,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
 
     @Override
     public Item removeFirst() {
-        if (items == null) {
-            return null;
-        }
-        if (items[currentFirst] == null) {
+        if (size == 0) {
             return null;
         }
         Item returnRemoveFirst = items[currentFirst];
@@ -92,6 +89,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         nextFirst = currentFirst;
         currentFirst = (currentFirst + 1) % items.length;
         size--;
+        usage = (double) size / (double) items.length;
         if (items.length > 8 && usage < 0.25) {
             resize(items.length / 2);
         }
@@ -100,10 +98,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
 
     @Override
     public Item removeLast() {
-        if (items == null) {
-            return null;
-        }
-        if (items[currentLast] == null) {
+        if (size == 0) {
             return null;
         }
         Item returnRemoveLast = items[currentLast];
@@ -111,6 +106,7 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
         nextLast = currentLast;
         currentLast = (currentLast - 1 + items.length) % items.length;
         size--;
+        usage = (double) size / (double) items.length;
         if (items.length > 8 && usage < 0.25) {
             resize(items.length / 2);
         }
@@ -170,10 +166,10 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
      */
     @Override
     public void printDeque() {
-        int printPosition = currentFirst;
-        while (items[printPosition] == null) {
-            printPosition = (printPosition + 1) % items.length;
+        if (size == 0) {
+            return;
         }
+        int printPosition = currentFirst;
         for (int printTimes = 0; printTimes < size - 1; printTimes++) {
             System.out.print(items[printPosition] + " ");
             printPosition = (printPosition + 1) % items.length;
@@ -187,16 +183,13 @@ public class ArrayDeque<Item> implements Deque<Item>, Iterable<Item> {
 
     public static void main(String[] args) {
         ArrayDeque<Integer> test = new ArrayDeque<>();
+        test.addLast(0);
+        test.addFirst(4);
+        test.addFirst(3);
+        test.addFirst(2);
         test.addLast(1);
+        test.addFirst(1);
         test.addLast(2);
-        test.printDeque();
-        ArrayDeque<Integer> test1 = new ArrayDeque<>();
-        test1.addLast(1);
-        test1.addLast(2);
-        System.out.println(test.equals(test1));
-        for (int i = 0; i < 11; i++) {
-            test.addFirst(i);
-        }
         test.printDeque();
     }
 }
