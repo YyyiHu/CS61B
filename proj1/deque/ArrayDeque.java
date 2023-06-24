@@ -18,7 +18,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         int seerPosition;
         int seerTimes;
 
-        public ArrayIterator() {
+        ArrayIterator() {
             seerPosition = front;
         }
 
@@ -72,7 +72,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if ((double) size / items.length < 0.25) {
+        if (items.length > 8 && (double) size / items.length < 0.25) {
             resize(items.length / 2);
         }
         T returnRemoveFirst = items[front];
@@ -88,11 +88,17 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if ((double) size / items.length < 0.25) {
+        if (items.length > 8 && (double) size / items.length < 0.25) {
             resize(items.length / 2);
         }
-        T returnRemoveLast = items[back];
-        items[back] = null;
+        T returnRemoveLast = null;
+        if (back == 0 && items[back] == null) {
+            returnRemoveLast = items[items.length - 1];
+            items[items.length - 1] = null;
+        } else {
+            returnRemoveLast = items[back];
+            items[back] = null;
+        }
         size--;
         back = (front + size) % items.length;
         return returnRemoveLast;
@@ -120,7 +126,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         }
         items = resizeItems;
         front = 0;
-        back = (front + size) % items.length;
+        back = front + size;
     }
 
     // o is considered equal if it is a Deque and contains the same contents in the same order.
@@ -173,5 +179,4 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public Iterator<T> iterator() {
         return new ArrayIterator();
     }
-
 }

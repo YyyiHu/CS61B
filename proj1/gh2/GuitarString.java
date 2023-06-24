@@ -1,7 +1,6 @@
 package gh2;
 
 import deque.ArrayDeque;
-import deque.Deque;
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
@@ -54,9 +53,4 @@ public class GuitarString {
         return buffer.get(0);
     }
 
-    public static void main(String[] args) {
-        GuitarString guitarString = new GuitarString(1500);
-        guitarString.pluck();
-        guitarString.tic();
-    }
 }
