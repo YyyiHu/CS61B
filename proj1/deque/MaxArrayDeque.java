@@ -55,4 +55,3 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return maxItem;
     }
 }
-
