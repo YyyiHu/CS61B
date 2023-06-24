@@ -72,14 +72,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
-        if (items.length > 8 && (double) size / items.length < 0.25) {
-            resize(items.length / 2);
-        }
         T returnRemoveFirst = items[front];
         items[front] = null;
         front = (front + 1) % items.length;
         size--;
         back = (front + size) % items.length;
+        if (items.length > 8 && (double) size / items.length < 0.25) {
+            resize(items.length / 2);
+        }
         return returnRemoveFirst;
     }
 
@@ -88,19 +88,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (size == 0) {
             return null;
         }
+        T returnRemoveLast = items[(back - 1 + items.length) % items.length];
+        items[(back - 1 + items.length) % items.length] = null;
+        size--;
+        back = (front + size) % items.length;
         if (items.length > 8 && (double) size / items.length < 0.25) {
             resize(items.length / 2);
         }
-        T returnRemoveLast = null;
-        if (back == 0 && items[back] == null) {
-            returnRemoveLast = items[items.length - 1];
-            items[items.length - 1] = null;
-        } else {
-            returnRemoveLast = items[back];
-            items[back] = null;
-        }
-        size--;
-        back = (front + size) % items.length;
         return returnRemoveLast;
     }
 
@@ -179,4 +173,5 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public Iterator<T> iterator() {
         return new ArrayIterator();
     }
+
 }
