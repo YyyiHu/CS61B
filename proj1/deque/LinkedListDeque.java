@@ -151,22 +151,22 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
         if (this == o) {
             return true;
         }
-        if (o instanceof LinkedListDeque) {
-            LinkedListDeque<T> anotherDeque = (LinkedListDeque<T>) o;
+        if (o instanceof ArrayDeque) {
+            ArrayDeque<T> anotherDeque = (ArrayDeque<T>) o;
             if (anotherDeque.size() == this.size) {
                 for (int i = 0; i < anotherDeque.size(); i++) {
-                    if (!anotherDeque.get(i).equals(this.get(i))) {
+                    if (!this.get(i).equals(anotherDeque.get(i))) {
                         return false;
                     }
                 }
                 return true;
             }
         }
-        if (o instanceof ArrayDeque) {
-            ArrayDeque<T> anotherDeque = (ArrayDeque<T>) o;
+        if (o instanceof LinkedListDeque) {
+            LinkedListDeque<T> anotherDeque = (LinkedListDeque<T>) o;
             if (anotherDeque.size() == this.size) {
-                for (int i = 0; i < anotherDeque.size(); i++) {
-                    if (!anotherDeque.get(i).equals(this.get(i))) {
+                for (int i = 0; i < size; i++) {
+                    if (!this.get(i).equals(anotherDeque.get(i))) {
                         return false;
                     }
                 }
@@ -195,5 +195,4 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
             pos = 0;
         }
     }
-    
 }
