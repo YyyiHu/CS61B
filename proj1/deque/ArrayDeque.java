@@ -107,6 +107,12 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     // Gets the item at the given index, where 0 is the front, 1 is the next item, and so forth.
     public T get(int index) {
+        if (this.isEmpty()) {
+            return null;
+        }
+        if (index > size - 1) {
+            return null;
+        }
         return items[(front + index) % items.length];
     }
 
@@ -133,10 +139,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             if (this.size() != anotherDeque.size()) {
                 return false;
             }
-            for (int i = 0; i < size; i++)
-                if (!this.get(i).equals(anotherDeque.get(i))) {
+            for (int i = 0; i < size; i++) {
+                T myItem = this.get(i);
+                T anotherItem = anotherDeque.get(i);
+                if (!myItem.equals(anotherItem)) {
                     return false;
                 }
+            }
             return true;
         }
         if (o instanceof LinkedListDeque) {
@@ -144,16 +153,17 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             if (this.size() != anotherDeque.size()) {
                 return false;
             }
-            for (int i = 0; i < size; i++)
-                if (!this.get(i).equals(anotherDeque.get(i))) {
+            for (int i = 0; i < size; i++) {
+                T myItem = this.get(i);
+                T anotherItem = anotherDeque.get(i);
+                if (!myItem.equals(anotherItem)) {
                     return false;
                 }
+            }
             return true;
         }
         return false;
     }
-
-
 
 
     /**

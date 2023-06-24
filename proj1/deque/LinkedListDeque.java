@@ -103,7 +103,10 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
     // Gets the item at the given index, where 0 is the front
     // If no such item exists, returns null
     public T get(int index) {
-        if (sentinel.next == sentinel) {
+        if (this.isEmpty()) {
+            return null;
+        }
+        if (index > size - 1) {
             return null;
         }
         Node node = sentinel;
@@ -156,10 +159,13 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
             if (this.size() != anotherDeque.size()) {
                 return false;
             }
-            for (int i = 0; i < size; i++)
-                if (!this.get(i).equals(anotherDeque.get(i))) {
+            for (int i = 0; i < size; i++) {
+                T myItem = this.get(i);
+                T anotherItem = anotherDeque.get(i);
+                if (!myItem.equals(anotherItem)) {
                     return false;
                 }
+            }
             return true;
         }
         if (o instanceof LinkedListDeque) {
@@ -167,10 +173,13 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
             if (this.size() != anotherDeque.size()) {
                 return false;
             }
-            for (int i = 0; i < size; i++)
-                if (!this.get(i).equals(anotherDeque.get(i))) {
+            for (int i = 0; i < size; i++) {
+                T myItem = this.get(i);
+                T anotherItem = anotherDeque.get(i);
+                if (!myItem.equals(anotherItem)) {
                     return false;
                 }
+            }
             return true;
         }
         return false;
