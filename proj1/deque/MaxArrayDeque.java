@@ -33,18 +33,6 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             } else if (b == null) {
                 returnValue = 1;
             }
-            if (a instanceof Integer && b instanceof Integer) {
-                returnValue = (int) a - (int) b;
-            }
-            if (a instanceof Double && b instanceof Double) {
-                if (((double) a - (double) b) > 0) {
-                    returnValue = 1;
-                } else if (((double) a - (double) b) == 0) {
-                    returnValue = 0;
-                } else if (((double) a - (double) b) < 0) {
-                    returnValue = -1;
-                }
-            }
             return returnValue;
         }
 
@@ -62,14 +50,14 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             return null;
         }
         Iterator<T> seer = iterator();
-        T curMax = null;
-        T prevMax = null;
+        T cur = null;
+        T prev;
         T max = null;
         while (seer.hasNext()) {
-            prevMax = curMax;
-            curMax = seer.next();
-            if (arrayComparator.compare(curMax, prevMax) > 0) {
-                max = curMax;
+            prev = cur;
+            cur = seer.next();
+            if (arrayComparator.compare(cur, prev) > 0) {
+                max = cur;
             }
         }
         return max;
@@ -80,14 +68,14 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             return null;
         }
         Iterator<T> seer = iterator();
-        T curMax = null;
-        T prevMax = null;
+        T cur = null;
+        T prev;
         T max = null;
         while (seer.hasNext()) {
-            prevMax = curMax;
-            curMax = seer.next();
-            if (c.compare(curMax, prevMax) > 0) {
-                max = curMax;
+            prev = cur;
+            cur = seer.next();
+            if (c.compare(cur, prev) > 0) {
+                max = cur;
             }
         }
         return max;

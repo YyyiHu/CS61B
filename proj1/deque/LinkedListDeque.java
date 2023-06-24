@@ -152,36 +152,36 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
             return true;
         }
         if (o instanceof ArrayDeque) {
-            ArrayDeque<T> anotherDeque = (ArrayDeque<T>) o;
-            if (anotherDeque.size() == this.size) {
-                for (int i = 0; i < anotherDeque.size(); i++) {
-                    T thisElement = this.get(i);
-                    T anotherElement = anotherDeque.get(i);
-                    if (thisElement == null && anotherElement == null) {
-                        continue;
-                    }
-                    if (thisElement == null || anotherElement == null || !thisElement.equals(anotherElement)) {
-                        return false;
-                    }
-                }
-                return true;
+            ArrayDeque<T> anotherDeque = new ArrayDeque<>();
+            if (this.size() != anotherDeque.size()) {
+                return false;
             }
+            Iterator<T> iterator1 = iterator();
+            Iterator<T> iterator2 = anotherDeque.iterator();
+            while (iterator1.hasNext()) {
+                T item1 = iterator1.next();
+                T item2 = iterator2.next();
+                if (!item1.equals(item2)) {
+                    return false;
+                }
+            }
+            return true;
         }
         if (o instanceof LinkedListDeque) {
             LinkedListDeque<T> anotherDeque = (LinkedListDeque<T>) o;
-            if (anotherDeque.size() == this.size) {
-                for (int i = 0; i < anotherDeque.size(); i++) {
-                    T thisElement = this.get(i);
-                    T anotherElement = anotherDeque.get(i);
-                    if (thisElement == null && anotherElement == null) {
-                        continue;
-                    }
-                    if (thisElement == null || anotherElement == null || !thisElement.equals(anotherElement)) {
-                        return false;
-                    }
-                }
-                return true;
+            if (this.size() != anotherDeque.size()) {
+                return false;
             }
+            Iterator<T> iterator1 = iterator();
+            Iterator<T> iterator2 = anotherDeque.iterator();
+            while (iterator1.hasNext()) {
+                T item1 = iterator1.next();
+                T item2 = iterator2.next();
+                if (!item1.equals(item2)) {
+                    return false;
+                }
+            }
+            return true;
         }
         return false;
     }
