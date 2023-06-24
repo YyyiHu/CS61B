@@ -3,7 +3,7 @@ package deque;
 import java.util.Comparator;
 import java.util.Iterator;
 
-public class MaxArrayDeque<T> extends ArrayDeque<T> {
+public class MaxArrayDeque<T> extends ArrayDeque<T> implements Comparator<T> {
     private Comparator<T> arrayComparator;
 
 
@@ -15,28 +15,25 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
     public MaxArrayDeque(Comparator<T> c) {
         arrayComparator = c;
     }
-    private static class ArrayComparator<T> implements Comparator<T> {
-        /**
-         * @param a the first object to be compared.
-         * @param b the second object to be compared.
-         * @return positive value if a is larger than b, 0 if a equals b, negative value if a
-         * is less than b.
-         */
 
-        @Override
-        public int compare(T a, T b) {
-            int returnValue = 0;
-            if (a == null && b == null) {
-                returnValue = 0;
-            } else if (a == null) {
-                returnValue = -1;
-            } else if (b == null) {
-                returnValue = 1;
-            }
-            return returnValue;
+    @Override
+    public int compare(T a, T b) {
+        if (a == null && b == null) {
+            return 0;
+        } else if (a == null) {
+            return -1;
+        } else if (b == null) {
+            return 1;
         }
 
+        if (a instanceof Comparable && b instanceof Comparable) {
+            Comparable<T> comparableA = (Comparable<T>) a;
+            return comparableA.compareTo(b);
+        }
+        // Return a default value if elements are not comparable
+        return 0;
     }
+
 
 
 
@@ -81,4 +78,4 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
         return max;
     }
 
-}
+    }
