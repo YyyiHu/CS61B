@@ -12,7 +12,7 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
      *
      * @param c the given Comparator.
      */
-    MaxArrayDeque(Comparator<T> c) {
+    public MaxArrayDeque(Comparator<T> c) {
         arrayComparator = c;
     }
     private static class ArrayComparator<T> implements Comparator<T> {
