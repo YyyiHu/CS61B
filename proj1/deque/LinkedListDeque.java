@@ -3,7 +3,7 @@ package deque;
 import java.util.Iterator;
 
 /**
- * This is a class representing a double-ended linkedlist.
+ * This is a class representing a double-ended LinkedList.
  * @param <T> The type of LinkedListDeque.
  */
 public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
@@ -153,7 +153,18 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
         }
         if (o instanceof LinkedListDeque) {
             LinkedListDeque<T> anotherDeque = (LinkedListDeque<T>) o;
-            if (anotherDeque.size == this.size) {
+            if (anotherDeque.size() == this.size) {
+                for (int i = 0; i < anotherDeque.size(); i++) {
+                    if (!anotherDeque.get(i).equals(this.get(i))) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        if (o instanceof ArrayDeque) {
+            ArrayDeque<T> anotherDeque = (ArrayDeque<T>) o;
+            if (anotherDeque.size() == this.size) {
                 for (int i = 0; i < anotherDeque.size(); i++) {
                     if (!anotherDeque.get(i).equals(this.get(i))) {
                         return false;
@@ -184,21 +195,5 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T>  {
             pos = 0;
         }
     }
-
-
-    public static void main(String[] args) {
-        LinkedListDeque<Integer> deque = new LinkedListDeque<>();
-        deque.addFirst(3);
-        deque.addFirst(2);
-        deque.addFirst(1);
-        deque.addLast(4);
-        LinkedListDeque<Integer> equalDeque = new LinkedListDeque<>();
-        equalDeque.addLast(1);
-        equalDeque.addLast(2);
-        equalDeque.addLast(3);
-        equalDeque.addLast(4);
-        System.out.println(deque.equals(equalDeque));
-        deque.printDeque();
-    }
-
+    
 }

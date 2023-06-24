@@ -35,8 +35,8 @@ public class GuitarString {
 
         for (int i = 0; i < buffer.size(); i++) {
             double r = Math.random() - 0.5;
-            buffer.removeFirst();
-            buffer.addLast(r);
+            buffer.removeLast();
+            buffer.addFirst(r);
         }
     }
 
@@ -45,13 +45,18 @@ public class GuitarString {
      */
     public void tic() {
         double removeFront = buffer.removeFirst();
-        double newDouble = (removeFront + buffer.get(buffer.currentFirst)) / 2 * DECAY;
+        double newDouble = (removeFront + buffer.get(0)) / 2 * DECAY;
         buffer.addLast(newDouble);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        return buffer.get(buffer.currentFirst);
+        return buffer.get(0);
     }
 
+    public static void main(String[] args) {
+        GuitarString guitarString = new GuitarString(1500);
+        guitarString.pluck();
+        guitarString.tic();
+    }
 }
