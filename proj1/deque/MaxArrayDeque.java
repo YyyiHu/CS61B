@@ -1,11 +1,10 @@
 package deque;
 
 import java.util.Comparator;
-import java.util.Iterator;
 
-public class MaxArrayDeque<T> extends ArrayDeque<T> implements Comparator<T> {
-    private Comparator<T> arrayComparator;
+public class MaxArrayDeque<T> extends ArrayDeque<T> {
 
+    private Comparator<T> comparator;
 
     /**
      * Creates a MaxArrayDeque with the given Comparator.
@@ -13,69 +12,47 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> implements Comparator<T> {
      * @param c the given Comparator.
      */
     public MaxArrayDeque(Comparator<T> c) {
-        arrayComparator = c;
+        super();
+        comparator = c;
     }
-
-    @Override
-    public int compare(T a, T b) {
-        if (a == null && b == null) {
-            return 0;
-        } else if (a == null) {
-            return -1;
-        } else if (b == null) {
-            return 1;
-        }
-
-        if (a instanceof Comparable && b instanceof Comparable) {
-            Comparable<T> comparableA = (Comparable<T>) a;
-            return comparableA.compareTo(b);
-        }
-        // Return a default value if elements are not comparable
-        return 0;
-    }
-
-
-
 
     /**
-     * Find the maximum element in the ArrayDeque.
+     * Returns the maximum element in the deque as governed by the previously given Comparator.
+     * If the MaxArrayDeque is empty, simply returns null.
      *
-     * @return the maximum element in the deque. Null if the MaxArrayDeque is empty.
+     * @return the maximum element in the deque.
      */
     public T max() {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
-        Iterator<T> seer = iterator();
-        T cur = null;
-        T prev;
-        T max = null;
-        while (seer.hasNext()) {
-            prev = cur;
-            cur = seer.next();
-            if (arrayComparator.compare(cur, prev) > 0) {
-                max = cur;
+        T maxItem = this.get(0);
+        for (int i = 1; i < size(); i++) {
+            if (comparator.compare(this.get(i), maxItem) > 0) {
+                maxItem = this.get(i);
             }
         }
-        return max;
+        return maxItem;
     }
 
+    /**
+     * Returns the maximum element in the deque as governed by the parameter Comparator c.
+     * If the MaxArrayDeque is empty, simply returns null.
+     *
+     * @param c the Comparator to be used for finding the maximum element.
+     * @return the maximum element in the deque.
+     */
     public T max(Comparator<T> c) {
-        if (this.isEmpty()) {
+        if (isEmpty()) {
             return null;
         }
-        Iterator<T> seer = iterator();
-        T cur = null;
-        T prev;
-        T max = null;
-        while (seer.hasNext()) {
-            prev = cur;
-            cur = seer.next();
-            if (c.compare(cur, prev) > 0) {
-                max = cur;
+        T maxItem = this.get(0);
+        for (int i = 1; i < size(); i++) {
+            if (c.compare(this.get(i), maxItem) > 0) {
+                maxItem = this.get(i);
             }
         }
-        return max;
+        return maxItem;
     }
+}
 
-    }
